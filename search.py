@@ -1,27 +1,39 @@
 #!/usr/bin/env python3
 
+import inspect
+
+# find all elements in a list that satisfy a given condition
+
+def search(elements, condition):
+    assert isinstance(elements, list), "first argument should be a list"
+    assert callable(condition), "second argument should be callable"
+    assert len(inspect.getargspec(condition).args) == 1, "second argument should take exactly one argument"
+
+    if len(elements) == 0:
+        return []
+
+    elif len(elements) == 1:
+        element = elements[0]
+        return [element] if condition(element) else []
+
+    else:
+        index = int(len(elements) / 2)
+        return search(elements[:index], condition) \
+             + search(elements[index:], condition)
+
+
 # find all strings in a list that have a given prefix
 
 def prefix_search(strings, prefix):
-    assert isinstance(strings, list), "first argument is not a list"
-    assert isinstance(prefix, str), "second argument is not a string"
+    assert isinstance(strings, list), "first argument should be a list"
+    assert isinstance(prefix, str), "second argument should be a string"
 
-    if len(strings) == 0:
-        return []
-
-    elif len(strings) == 1:
-        string = strings[0]
-        return [string] if string_has_prefix(string, prefix) else []
-
-    else:
-        index = int(len(strings) / 2)
-        return prefix_search(strings[:index], prefix) \
-             + prefix_search(strings[index:], prefix)
+    return search(strings, lambda e: string_has_prefix(e, prefix))
 
 
 def string_has_prefix(string, prefix):
-    assert isinstance(string, str), "first argument is not a string"
-    assert isinstance(prefix, str), "second argument is not a string"
+    assert isinstance(string, str), "first argument should be a string"
+    assert isinstance(prefix, str), "second argument should be a string"
 
     return string[:len(prefix)] == prefix
 
