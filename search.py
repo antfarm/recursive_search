@@ -3,23 +3,27 @@
 # find all strings in a list that have a given prefix
 
 def prefix_search(strings, prefix):
-    assert(isinstance(strings, list))
-    assert(isinstance(prefix, str))
+    assert isinstance(strings, list), "first argument is not a list"
+    assert isinstance(prefix, str), "second argument is not a string"
 
     if len(strings) == 0:
         return []
 
     elif len(strings) == 1:
         string = strings[0]
-        if string[:len(prefix)] == prefix:
-            return [string]
-        else:
-            return []
+        return [string] if string_has_prefix(string, prefix) else []
 
     else:
         index = int(len(strings) / 2)
         return prefix_search(strings[:index], prefix) \
              + prefix_search(strings[index:], prefix)
+
+
+def string_has_prefix(string, prefix):
+    assert isinstance(string, str), "first argument is not a string"
+    assert isinstance(prefix, str), "second argument is not a string"
+
+    return string[:len(prefix)] == prefix
 
 
 # find all phone numbers with matching area code
