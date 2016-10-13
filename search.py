@@ -28,7 +28,7 @@ def prefix_search(strings, prefix):
     assert isinstance(strings, list), "first argument should be a list"
     assert isinstance(prefix, str), "second argument should be a string"
 
-    return search(strings, lambda e: string_has_prefix(e, prefix))
+    return search(strings, lambda s: string_has_prefix(s, prefix))
 
 
 def string_has_prefix(string, prefix):
